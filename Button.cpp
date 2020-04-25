@@ -60,7 +60,7 @@ unsigned short Button::checkPress() {
         }
 
     /* Checking if is the short press. */      
-    } else if ((digitalRead(getPin()) == LOW) && getPressed() && (millis() < getTimeOut()) && (getValuePress() != 2)) {
+    } else if ((digitalRead(getPin()) == LOW) && getPressed() && (millis() < getTimeOut()) && (getValuePress() != -1)) {
         setValuePress(1);
         setPressed(false);
 
