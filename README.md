@@ -23,7 +23,7 @@ You can select the library on `Include Library` -> `Button`. It will automatical
 ```c++
 #include "Button.h"
 ```
-### How to use
+## How to use
 See the [Wiki](https://github.com/davidepalladino/Button-Arduino/wiki)' page for detail about the use.
 
 ## Contribute
