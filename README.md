@@ -23,5 +23,8 @@ You can select the library on `Include Library` -> `Button`. It will automatical
 ```c++
 #include "Button.h"
 ```
+### How to use
+See the [Wiki](https://github.com/davidepalladino/Button-Arduino/wiki). page for detail about the use.
+
 ## Contribute
 Your contribute is important for me. Don't hesitate with issues and pull requests for improving this class.
