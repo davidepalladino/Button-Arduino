@@ -122,7 +122,7 @@
              * This method gets the actual press, both for short and long. For short press there is the debouncing.
              * @return Value -1 if the pressure is long; 0 if there is not any pressure; 1 if the pressure is short.
              */     
-            uint8_t checkPress();
+            int8_t checkPress();
 
         private:
             uint8_t pin;                                // Pin of the button to read the status.
