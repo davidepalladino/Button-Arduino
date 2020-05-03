@@ -115,7 +115,7 @@ void Button::setActualValue(int8_t actualValue) {
     this->actualValue = actualValue;
 }
 
-uint8_t Button::getPin() {
+int8_t Button::getPin() {
     return this->pin;
 }
 
