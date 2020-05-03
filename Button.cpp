@@ -40,7 +40,7 @@ uint32_t Button::getTimeLongPress() {
     return this->timeLongPress;
 }
 
-uint8_t Button::checkPress() {   
+int8_t Button::checkPress() {   
     /* Checking if is the first press. */
     if (digitalRead(getPin()) == getValuePress() && !getStatus()) {
         setStatus(true);
@@ -115,7 +115,7 @@ void Button::setActualValue(int8_t actualValue) {
     this->actualValue = actualValue;
 }
 
-int8_t Button::getPin() {
+uint8_t Button::getPin() {
     return this->pin;
 }
 
