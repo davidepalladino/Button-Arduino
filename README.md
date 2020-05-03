@@ -24,10 +24,10 @@ You can select the library on `Include Library` -> `Button`. It will automatical
 #include "Button.h"
 ```
 ## How to use
-See the [Wiki](https://github.com/davidepalladino/Button-Arduino/wiki)' page for details about the use.
+See the [Wiki](https://github.com/davidepalladino/Button-Arduino/wiki) page for details about the use.
 
 ## Changelog
-See the [Changelog](/CHANGELOG.md)' page for details about the versions.
+See the [Changelog](/CHANGELOG.md) page for details about the versions.
 
 ## Contribute
 Your contribute is important for me. Don't hesitate with issues and pull requests for improving this class.
