@@ -7,7 +7,7 @@
   * @author Davide Palladino
   * @contact davidepalladino@hotmail.com
   * @version 1.1.1
-  * @date April 20th, 2020
+  * @date May 3rd, 2020
   * 
   * This library is free software; you can redistribute it and/or
   *  modify it under the terms of the GNU General Public
@@ -30,12 +30,12 @@
 
     #define DEFAULT_LONG_PRESSURE 0                         // Default value in milliseconds for the long press.
 
-    typedef enum {PULLUP, NO_PULLUP} input;                 // Symbolic costants to indicate, respectively, if is "INPUT_PULLUP" or "INPUT".
+    typedef enum {PULLUP, NO_PULLUP} input_t;               // Symbolic costants to indicate, respectively, if is "INPUT_PULLUP" or "INPUT".
 
     /**
      *  Poiter type to a procdeure, that will be assigned to the member data "ptrActionShort" and "ptrActionLong" through the costructor or
      *  the relative methods.
-     *  CAUTION: The procedures must be without parameters.
+     *  @warning: The procedures must be without parameters.
      */
     typedef void (*ptrProcedure) ();
 
@@ -47,7 +47,7 @@
             /** 
              * This constructor creates the object setting only the pin button. Moreover, it calls "pinMode".
              * @param pin Digital pin of the button.
-             * CAUTION: The pin will be set to "NO_PULLUP" mode, respectively "INPUT" of "pinMode".
+             * @warning: The pin will be set to "NO_PULLUP" mode, respectively "INPUT" of "pinMode".
              */
             Button(uint8_t pin);
 
@@ -56,13 +56,13 @@
              * @param pin Digital pin of the button.
              * @param mode Mode of the input, between "INPUT" (with "NO_PULLUP" constant) and "INPUT_PULLUP" (with "PULLUP" constant).
              */
-            Button(uint8_t pin, input mode);
+            Button(uint8_t pin, input_t mode);
 
             /** 
              * This constructor creates the object setting the pin button and the time to define the long press. Moreover, it calls "pinMode".
              * @param pin Digital pin of the button.
              * @param timeLongPress Time in milliseconds for long press.
-             * CAUTION: The pin will be set to "NO_PULLUP" mode, respectively "INPUT" of "pinMode".
+             * @warning: The pin will be set to "NO_PULLUP" mode, respectively "INPUT" of "pinMode".
              */
             Button(uint8_t pin, uint32_t timeLongPress);
 
@@ -72,7 +72,7 @@
              * @param mode Mode of the input, between "INPUT" (with "NO_PULLUP" constant) and "INPUT_PULLUP" (with "PULLUP" constant).
              * @param timeLongPress Time in milliseconds for long press.
              */
-            Button(uint8_t pin, input mode, uint32_t timeLongPress);
+            Button(uint8_t pin, input_t mode, uint32_t timeLongPress);
 
             /** 
              * This constructor creates the object setting the pin button, the time to define the long press and the procedures for short and long press. Moreover, it calls "pinMode".
@@ -80,7 +80,7 @@
              * @param timeLongPress Time in milliseconds for long press.
              * @param ptrActionShort Pointer to a procedure for the short press. The procedure must be without parameters.
              * @param ptrActionLong Pointer to a procedure for the long press. The procedure must be without parameters.
-             * CAUTION: The pin will be set to "NO_PULLUP" mode, respectively "INPUT" of "pinMode".
+             * @warning: The pin will be set to "NO_PULLUP" mode, respectively "INPUT" of "pinMode".
              */
             Button(uint8_t pin, uint32_t timeLongPress, ptrProcedure ptrActionShort, ptrProcedure ptrActionLong);
 
@@ -92,7 +92,7 @@
              * @param ptrActionShort Pointer to a procedure for the short press. The procedure must be without parameters.
              * @param ptrActionLong Pointer to a procedure for the long press. The procedure must be without parameters.
              */
-            Button(uint8_t pin, input mode, uint32_t timeLongPress, ptrProcedure ptrActionShort, ptrProcedure ptrActionLong);
+            Button(uint8_t pin, input_t mode, uint32_t timeLongPress, ptrProcedure ptrActionShort, ptrProcedure ptrActionLong);
 
             /**
              * This method sets the time for the long press.
@@ -145,7 +145,7 @@
              * This method sets the input mode.
              * @param mode Mode of the input.
              */
-            void setMode(input mode);
+            void setMode(input_t mode);
 
             /**
              * This method sets the value where the button will be considered pressed.

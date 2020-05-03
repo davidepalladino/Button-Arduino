@@ -2,15 +2,15 @@
 
 Button::Button(uint8_t pin) : Button(pin, NO_PULLUP, DEFAULT_LONG_PRESSURE, NULL, NULL) {}
 
-Button::Button(uint8_t pin, input mode) : Button(pin, mode, DEFAULT_LONG_PRESSURE, NULL, NULL) {}
+Button::Button(uint8_t pin, input_t mode) : Button(pin, mode, DEFAULT_LONG_PRESSURE, NULL, NULL) {}
 
 Button::Button(uint8_t pin, uint32_t timeLongPress) : Button(pin, NO_PULLUP, timeLongPress, NULL, NULL) {}
 
-Button::Button(uint8_t pin, input mode, uint32_t timeLongPress) : Button(pin, mode, timeLongPress, NULL, NULL) {}
+Button::Button(uint8_t pin, input_t mode, uint32_t timeLongPress) : Button(pin, mode, timeLongPress, NULL, NULL) {}
 
 Button::Button(uint8_t pin, uint32_t timeLongPress, ptrProcedure ptrActionShort, ptrProcedure ptrActionLong) : Button(pin, NO_PULLUP, timeLongPress, ptrActionShort, ptrActionLong) {}
 
-Button::Button(uint8_t pin, input mode, uint32_t timeLongPress, ptrProcedure ptrActionShort, ptrProcedure ptrActionLong) {
+Button::Button(uint8_t pin, input_t mode, uint32_t timeLongPress, ptrProcedure ptrActionShort, ptrProcedure ptrActionLong) {
     setPin(pin);
     setMode(mode);
 
@@ -41,8 +41,11 @@ uint32_t Button::getTimeLongPress() {
 }
 
 int8_t Button::checkPress() {   
+    /* Read and save the value for next analysis. */
+    uint8_t valueRead = digitalRead(getPin());
+
     /* Checking if is the first press. */
-    if (digitalRead(getPin()) == getValuePress() && !getStatus()) {
+    if (valueRead == getValuePress() && !getStatus()) {
         setStatus(true);
 
         /* Checking if is set the time of long press. If there is a value, will be set the timeout. */
@@ -51,7 +54,7 @@ int8_t Button::checkPress() {
         }
 
     /* Checking if is the long press. */
-    } else if ((digitalRead(getPin()) == getValuePress()) && getStatus() && (millis() >= getTimeOut()) && (getTimeLongPress() > 0)) {
+    } else if ((valueRead == getValuePress()) && getStatus() && (millis() >= getTimeOut()) && (getTimeLongPress() > 0)) {
         setActualValue(-1);
         setStatus(false);
 
@@ -59,11 +62,11 @@ int8_t Button::checkPress() {
         if (this->ptrActionLong != NULL) {
            this->ptrActionLong();
            
-           while (digitalRead(getPin()) == HIGH); 
+           while (valueRead == HIGH); 
         }
 
     /* Checking if is the short press, verifying if is set the "timeLongPress" or not. */      
-    } else if ((digitalRead(getPin()) == !getValuePress()) && getStatus() && (((getActualValue() != -1) && (millis() < getTimeOut())) || (getTimeLongPress() == 0))) {
+    } else if ((valueRead == !getValuePress()) && getStatus() && (((getActualValue() != -1) && (millis() < getTimeOut())) || (getTimeLongPress() == 0))) {
         setActualValue(1);
         setStatus(false);
 
@@ -73,7 +76,7 @@ int8_t Button::checkPress() {
         }
 
     /* Checking if there is not a press. */
-    } else if (digitalRead(getPin()) == !getValuePress()) {
+    } else if (valueRead == !getValuePress()) {
         setActualValue(0);
         setStatus(false);
     }
@@ -85,7 +88,7 @@ void Button::setPin(uint8_t pin) {
     this->pin = pin;
 }
 
-void Button::setMode(input mode) {
+void Button::setMode(input_t mode) {
     /* Translation of "mode" parameter "NO_PULLUP"/"PULLUP" to the rispective "INPUT"/"INPUT_PULLUP". */
     if (mode == NO_PULLUP) {
         this->mode = INPUT;
