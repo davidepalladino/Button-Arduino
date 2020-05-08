@@ -1,0 +1,17 @@
+#######################################
+# Syntax Coloring Map Button
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+Button	KEYWORD
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+setTimeLongPress    KEYWORD2
+setPtrActionShort   KEYWORD2
+setPtrActionLong	KEYWORD2
+getTimeLongPress	KEYWORD2
+checkPress  KEYWORD2

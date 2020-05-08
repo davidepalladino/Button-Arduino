@@ -1,6 +1,6 @@
 # Button library for Arduino
 ## Description
-This library allows to manage a button, specifying if the pressure is long or not. For short press there is the debouncing. Is possible to assign a specific procedure, both for short and long press.
+This library allows to manage a button. It can specify if the pressure is long or not. Morevoer, is possible to assign a time (in milliseconds) to consider the long press, and a specific procedure both for short and long press. For short press there is the debouncing.
 
 ## Installation
 To install this library, you can see this little guides.
@@ -17,7 +17,7 @@ You can select the library on `Include Library` -> `Button`. It will automatical
 
 ### Other IDE
 1. Download and extract it
-2. Copy the contents in your project folder
+2. Copy the `src` content in your project folder
 3. Open the project with your other IDE
 4. Use the preprocessor directives to add the library, like this:
 ```c++

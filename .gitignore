@@ -33,3 +33,5 @@
 
 # Other
 *.code-workspace
+*.vscode
+*extras
