@@ -1,4 +1,4 @@
-In this document there is the story about the various versions. See the [Wiki](https://github.com/davidepalladino/Button-Arduino/wiki)' page for detail about the use.
+In this document there is the story about the various versions. See the [Wiki](https://github.com/davidepalladino/Button-Arduino/wiki) page for detail about the use.
 
 ### 1.1.1 - 2020-05-03
 **Added**
