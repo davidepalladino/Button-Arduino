@@ -31,7 +31,7 @@
 
     #define DEFAULT_LONG_PRESSURE 0                                           // Default value in milliseconds for the long press.
 
-    typedef enum input_t : uint8_t {PULLUP, NO_PULLUP} input_t;               // Symbolic costants to indicate, respectively, if is "INPUT_PULLUP" or "INPUT".
+    typedef enum input : uint8_t {PULLUP, NO_PULLUP} input_t;                 // Symbolic costants to indicate, respectively, if is "INPUT_PULLUP" or "INPUT".
 
     /**
      *  Poiter type to a procdeure, that will be assigned to the member data "ptrActionShort" and "ptrActionLong" through the costructor or
