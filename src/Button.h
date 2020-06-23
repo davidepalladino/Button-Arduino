@@ -8,7 +8,7 @@
   * @author Davide Palladino
   * @contact davidepalladino@hotmail.com
   * @version 1.1.1
-  * @date May 3rd, 2020
+  * @date 3rd May, 2020
   * 
   * This library is free software; you can redistribute it and/or
   *  modify it under the terms of the GNU General Public
