@@ -1,14 +1,14 @@
 #include "Button.h"
 
-Button::Button(uint8_t pin) : Button(pin, NO_PULLUP, DEFAULT_LONG_PRESSURE, NULL, NULL) {}
+Button::Button(uint8_t pin) : Button(pin, (input_t) 1, DEFAULT_LONG_PRESSURE, NULL, NULL) {}
 
 Button::Button(uint8_t pin, input_t mode) : Button(pin, mode, DEFAULT_LONG_PRESSURE, NULL, NULL) {}
 
-Button::Button(uint8_t pin, uint32_t timeLongPress) : Button(pin, NO_PULLUP, timeLongPress, NULL, NULL) {}
+Button::Button(uint8_t pin, uint32_t timeLongPress) : Button(pin, (input_t) 1, timeLongPress, NULL, NULL) {}
 
 Button::Button(uint8_t pin, input_t mode, uint32_t timeLongPress) : Button(pin, mode, timeLongPress, NULL, NULL) {}
 
-Button::Button(uint8_t pin, uint32_t timeLongPress, ptrProcedure ptrActionShort, ptrProcedure ptrActionLong) : Button(pin, NO_PULLUP, timeLongPress, ptrActionShort, ptrActionLong) {}
+Button::Button(uint8_t pin, uint32_t timeLongPress, ptrProcedure ptrActionShort, ptrProcedure ptrActionLong) : Button(pin, (input_t) 1, timeLongPress, ptrActionShort, ptrActionLong) {}
 
 Button::Button(uint8_t pin, input_t mode, uint32_t timeLongPress, ptrProcedure ptrActionShort, ptrProcedure ptrActionLong) {
     setPin(pin);
@@ -89,10 +89,10 @@ void Button::setPin(uint8_t pin) {
 }
 
 void Button::setMode(input_t mode) {
-    /* Translation of "mode" parameter "NO_PULLUP"/"PULLUP" to the rispective "INPUT"/"INPUT_PULLUP". */
-    if (mode == NO_PULLUP) {
+    /* Translation of "mode" parameter to the rispective "INPUT"/"INPUT_PULLUP". */
+    if (mode == 1) {
         this->mode = INPUT;
-    } else if (mode == PULLUP) {
+    } else if (mode == 0) {
         this->mode = INPUT_PULLUP;
     }
 }

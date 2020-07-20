@@ -11,7 +11,10 @@
 void procedureShortPress();
 void procedureLongPress();
 
-/* Creating of the button assigning the pin, the flag "PULLUP", the time (in milliseconds) for the long press and the pointers to the two procedures. */
+/** 
+ * Creating of the button assigning the pin, the constant "PULLUP", the time (in milliseconds) for the long press and the pointers to the two procedures.
+ * If the board is an ESP family, the respective constant "PULLUP" is "INTERNAL_RESISTOR".
+ */
 Button button1(4, PULLUP, 5000, procedureShortPress, procedureLongPress);
 
 void setup() {

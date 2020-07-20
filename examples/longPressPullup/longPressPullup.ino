@@ -8,7 +8,10 @@
 
 #include <Button.h>
 
-/* Creating of the button assigning the pin, the flag "PULLUP" and the time (in milliseconds) for the long press. */
+/**
+ * Creating of the button assigning the pin, the constant "PULLUP" and the time (in milliseconds) for the long press.
+ * If the board is an ESP family, the respective constant "PULLUP" is "INTERNAL_RESISTOR".
+ */
 Button button1(4, PULLUP, 5000);
 
 void setup() {

@@ -9,7 +9,7 @@ To install manually this library, you can see this little guides.
 1. Download and extract it
 2. Open Arudino IDE
 3. Select tab `Sketch` -> `Include Library` -> `Add .ZIP Library`
-4. Select the zip file included in `extras`
+4. Select the zip file inluded in `extras`
 You can select the library on `Include Library` -> `Button`. It will be automatically added on you project, like this:
 ```c++
 #include <Button.h>

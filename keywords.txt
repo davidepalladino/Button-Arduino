@@ -15,3 +15,12 @@ setPtrActionShort   KEYWORD2
 setPtrActionLong	KEYWORD2
 getTimeLongPress	KEYWORD2
 checkPress  KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+DEFAULT_LONG_PRESSURE   LITERAL1
+PULLUP   LITERAL1
+NO_PULLUP  LITERAL1
+INTERNAL_RESISTOR   LITERAL1
+EXTERNAL_RESISTOR   LITERAL1

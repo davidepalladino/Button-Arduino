@@ -31,8 +31,13 @@
 
     #define DEFAULT_LONG_PRESSURE 0                                           // Default value in milliseconds for the long press.
 
-    typedef enum input : uint8_t {PULLUP, NO_PULLUP} input_t;                 // Symbolic costants to indicate, respectively, if is "INPUT_PULLUP" or "INPUT".
-
+    // Symbolic costants to indicate, respectively, if is "INPUT_PULLUP" or "INPUT". If the board is an ESP family, the symbolic constants will be different because "PULLUP" is already used by the official library of ESP.
+    #if defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266)
+        typedef enum input : uint8_t {INTERNAL_RESISTOR = 0, EXTERNAL_RESISTOR = 1} input_t;
+    #else
+        typedef enum input : uint8_t {PULLUP = 0, NO_PULLUP = 1} input_t;
+    #endif
+    
     /**
      *  Poiter type to a procdeure, that will be assigned to the member data "ptrActionShort" and "ptrActionLong" through the costructor or
      *  the relative methods.
@@ -48,14 +53,14 @@
             /** 
              * This constructor creates the object setting only the pin button. Moreover, it calls "pinMode".
              * @param pin Digital pin of the button.
-             * @warning: The pin will be set to "NO_PULLUP" mode, respectively "INPUT" of "pinMode".
+             * @warning: The pin will be set to "NO_PULLUP/EXTERNAL_RESISTOR" mode, respectively "INPUT" of "pinMode".
              */
             Button(uint8_t pin);
 
             /** 
              * This constructor creates the object setting the pin button and the mode of the input. Moreover, it calls "pinMode".
              * @param pin Digital pin of the button.
-             * @param mode Mode of the input, between "INPUT" (with "NO_PULLUP" constant) and "INPUT_PULLUP" (with "PULLUP" constant).
+             * @param mode Mode of the input, between "PULLUP/INTERNAL_RESISTOR" (respectively "INPUT_PULLUP" of "pinMode) and "NO_PULLUP/EXTERNAL_RESISTOR" (respectively "INPUT" of "pinMode). 
              */
             Button(uint8_t pin, input_t mode);
 
@@ -63,14 +68,14 @@
              * This constructor creates the object setting the pin button and the time to define the long press. Moreover, it calls "pinMode".
              * @param pin Digital pin of the button.
              * @param timeLongPress Time in milliseconds for long press.
-             * @warning: The pin will be set to "NO_PULLUP" mode, respectively "INPUT" of "pinMode".
+             * @warning: The pin will be set to "NO_PULLUP/EXTERNAL_RESISTOR" mode, respectively "INPUT" of "pinMode".
              */
             Button(uint8_t pin, uint32_t timeLongPress);
 
             /** 
              * This constructor creates the object setting the pin button, the mode of the input and the time to define the long press. Moreover, it calls "pinMode".
              * @param pin Digital pin of the button.
-             * @param mode Mode of the input, between "INPUT" (with "NO_PULLUP" constant) and "INPUT_PULLUP" (with "PULLUP" constant).
+             * @param mode Mode of the input, between "PULLUP/INTERNAL_RESISTOR" (respectively "INPUT_PULLUP" of "pinMode) and "NO_PULLUP/EXTERNAL_RESISTOR" (respectively "INPUT" of "pinMode). 
              * @param timeLongPress Time in milliseconds for long press.
              */
             Button(uint8_t pin, input_t mode, uint32_t timeLongPress);
@@ -81,14 +86,14 @@
              * @param timeLongPress Time in milliseconds for long press.
              * @param ptrActionShort Pointer to a procedure for the short press. The procedure must be without parameters.
              * @param ptrActionLong Pointer to a procedure for the long press. The procedure must be without parameters.
-             * @warning: The pin will be set to "NO_PULLUP" mode, respectively "INPUT" of "pinMode".
+             * @warning: The pin will be set to "NO_PULLUP/EXTERNAL_RESISTOR" mode, respectively "INPUT" of "pinMode".
              */
             Button(uint8_t pin, uint32_t timeLongPress, ptrProcedure ptrActionShort, ptrProcedure ptrActionLong);
 
             /** 
              * This constructor creates the object setting the pin button, the mode of the input, the time to define the long press and the procedures for short and long press. Moreover, it calls "pinMode".
              * @param pin Digital pin of the button.
-             * @param mode Mode of the input, between "INPUT" (with "NO_PULLUP" constant) and "INPUT_PULLUP" (with "PULLUP" constant).
+             * @param mode Mode of the input, between "PULLUP/INTERNAL_RESISTOR" (respectively "INPUT_PULLUP" of "pinMode) and "NO_PULLUP/EXTERNAL_RESISTOR" (respectively "INPUT" of "pinMode). 
              * @param timeLongPress Time in milliseconds for long press.
              * @param ptrActionShort Pointer to a procedure for the short press. The procedure must be without parameters.
              * @param ptrActionLong Pointer to a procedure for the long press. The procedure must be without parameters.
@@ -127,7 +132,7 @@
 
         private:
             uint8_t pin;                                // Pin of the button to read the status.
-            uint8_t mode;                               // Mode of the input, between "INPUT" (with "NO_PULLUP" constant) and "INPUT_PULLUP" (with "PULLUP" constant).
+            uint8_t mode;                               // Mode of the input, between "INPUT" (with "NO_PULLUP/EXTERNAL_RESISTOR" constant) and "INPUT_PULLUP" (with "PULLUP/INTERNAL_RESISTOR" constant).
             uint32_t timeLongPress;                     // Time in milliseconds for the long press.
             ptrProcedure ptrActionLong;                 // Pointer to a procedure for short press.
             ptrProcedure ptrActionShort;                // Pointer to a procedure for long press.

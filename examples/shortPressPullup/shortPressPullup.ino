@@ -8,7 +8,10 @@
 
 #include <Button.h>
 
-/* Creating of the button assigning the pin and the flag "PULLUP". */
+/**
+ * Creating of the button assigning the pin and the constant "PULLUP". 
+ * If the board is an ESP family, the respective constant "PULLUP" is "INTERNAL_RESISTOR".
+ */
 Button button1(4, PULLUP);
 
 void setup() {
