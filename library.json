@@ -1,0 +1,51 @@
+{
+    "name": "Button-Arduino",
+    "version": "1.2.0",
+    "description": "This library allows to manage a button. You can specify if the pressure is long or not. Morevoer, is possible to assign a time (in milliseconds) to consider the long press. For short press there is the debouncing.",
+    "keywords": "button, arduino, short press, long press, debouncing",
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/davidepalladino/Button-Arduino.git"
+    },
+    "authors":
+    {
+        "name": "Davide Palladino",
+        "email": "me@davidepalladino.com",
+        "url": "https://www.davidepalladino.com"
+    }
+    "frameworks": "arduino",
+    "platforms": "*"
+    "examples": [
+        {
+            "name": "longPress",
+            "base": "examples/longPress",
+            "files": "longPress.ino"
+        },
+        {
+            "name": "longPressPullup",
+            "base": "examples/longPressPullup",
+            "files": "longPressPullup.ino"
+        },
+        {
+            "name": "procedures",
+            "base": "examples/procedures",
+            "files": "procedures.ino"
+        },
+        {
+            "name": "proceduresPullup",
+            "base": "examples/proceduresPullup",
+            "files": "proceduresPullup.ino"
+        },
+        {
+            "name": "shortPress",
+            "base": "examples/shortPress",
+            "files": "shortPress.ino"
+        },
+        {
+            "name": "shortPressPullup",
+            "base": "examples/shortPressPullup",
+            "files": "shortPressPullup.ino"
+        }
+    ]
+  }
