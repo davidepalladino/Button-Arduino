@@ -2,7 +2,7 @@
  Checking if the pressure is short or long, with internal resistor
  by Davide Palladino <https://github.com/davidepalladino>
 
- modified on 4th May 2020
+ modified on 25th April 2021
  by Davide Palladino
 */
 
@@ -22,7 +22,7 @@ void loop() {
     /* Checking the pressure and writing to Serial Monitor, if the press is short or long. */
     if (button1.checkPress() == 1) {
         Serial.println("SHORT PRESS!");
-    } else if ((button1.checkPress() == -1) {
+    } else if (button1.checkPress() == -1) {
         Serial.println("LONG PRESS!");
     }
 }
