@@ -27,7 +27,7 @@ You can select the library on `Include Library` -> `Button`. It will be automati
 See the [Wiki](https://github.com/davidepalladino/Button-Arduino/wiki) page for details about the use.
 
 ## Changelog
-See the [Changelog](/CHANGELOG.md) page for details about the versions.
+See the [Releases](https://github.com/davidepalladino/Button-Arduino/releases) page for details about the versions.
 
 ## Contribute
 Your contribute is important for me. Don't hesitate with issues and pull requests for improving this class.
