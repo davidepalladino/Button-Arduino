@@ -1,3 +1,5 @@
+# WARNING: This version is deprecated. Consider the new version [2.x.x](https://github.com/davidepalladino/Button-Arduino/tree/2.x.x).
+
 # Button library for Arduino
 ## Description
 This library allows to manage a button. You can specify if the pressure is long or not. Morevoer, is possible to assign a time (in milliseconds) to consider the long press, and a specific procedure both for short and long press. For short press there is the debouncing.
