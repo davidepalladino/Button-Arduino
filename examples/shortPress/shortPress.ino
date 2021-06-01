@@ -1,14 +1,18 @@
 /**
- Checking if the pressure is short or not.
- by Davide Palladino <https://github.com/davidepalladino>
+    Checking if the pressure with external resistor.
 
- modified on 4th May 2020
- by Davide Palladino
+    @author Davide Palladino
+    @contact me@davidepalladino.com
+    @website www.davidepalladino.com
+    @date 1st June, 2021
 */
 
 #include <Button.h>
 
-/* Creating of the button assigning only the pin. */
+/**
+ * Creating of the button assigning only the pin.
+ * In this case will be utilized an external resistor.
+ */
 Button button1(4);
 
 void setup() {
@@ -18,6 +22,6 @@ void setup() {
 void loop() {
     /* Checking the pressure and writing to Serial Monitor, if is pressed. */
     if (button1.checkPress() == 1) {
-        Serial.prisntln("PRESSED!");
+        Serial.println("PRESSED!");
     }
 }

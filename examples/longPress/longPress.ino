@@ -1,25 +1,33 @@
 /**
- Checking if the pressure is short or long.
- by Davide Palladino <https://github.com/davidepalladino>
+    Checking if the pressure is short or not, with external resistor.
 
- modified on 25th April 2021
- by Davide Palladino
+    @author Davide Palladino
+    @contact me@davidepalladino.com
+    @website www.davidepalladino.com
+    @date 1st June, 2021
 */
 
 #include <Button.h>
 
-/* Creating of the button assigning the pin and the time (in milliseconds) for the long press. */
+/**
+ * Creating of the button assigning the pin and the time (in milliseconds) for the long press.
+ */
 Button button1(4, 5000);
+
+short result = 0;
 
 void setup() {
     Serial.begin(9600);
 }
 
 void loop() {
-    /* Checking the pressure and writing to Serial Monitor, if the press is short or long. */
-    if (button1.checkPress() == 1) {
+    /* Checking the button and storing the result into this variable to next analysis. */
+    result = button1.checkPress();
+
+    /* Examining the previous result and writing if the pressure is short or long to Serial Monitor. */
+    if (result == 1) {
         Serial.println("SHORT PRESS!");
-    } else if (button1.checkPress() == -1) {
+    } else if (result == -1) {
         Serial.println("LONG PRESS!");
     }
 }

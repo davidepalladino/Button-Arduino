@@ -1,143 +1,92 @@
 #include "Button.h"
 
-Button::Button(uint8_t pin) : Button(pin, (input_t) 1, DEFAULT_LONG_PRESSURE, NULL, NULL) {}
+Button::Button(uint8_t pin) : Button(pin, B_NOPULLUP, DEFAULT_LONG_PRESS) {}
 
-Button::Button(uint8_t pin, input_t mode) : Button(pin, mode, DEFAULT_LONG_PRESSURE, NULL, NULL) {}
+Button::Button(uint8_t pin, input_t mode) : Button(pin, mode, DEFAULT_LONG_PRESS) {}
 
-Button::Button(uint8_t pin, uint32_t timeLongPress) : Button(pin, (input_t) 1, timeLongPress, NULL, NULL) {}
+Button::Button(uint8_t pin, uint32_t timeLongPress) : Button(pin, B_NOPULLUP, timeLongPress) {}
 
-Button::Button(uint8_t pin, input_t mode, uint32_t timeLongPress) : Button(pin, mode, timeLongPress, NULL, NULL) {}
+Button::Button(uint8_t pin, input_t mode, uint32_t timeLongPress) {
+    this->pin = pin;
 
-Button::Button(uint8_t pin, uint32_t timeLongPress, ptrProcedure ptrActionShort, ptrProcedure ptrActionLong) : Button(pin, (input_t) 1, timeLongPress, ptrActionShort, ptrActionLong) {}
-
-Button::Button(uint8_t pin, input_t mode, uint32_t timeLongPress, ptrProcedure ptrActionShort, ptrProcedure ptrActionLong) {
-    setPin(pin);
     setMode(mode);
-
     setValuePress();
 
-    pinMode(getPin(), getMode());
+    pinMode(this->pin, this->mode);
     
     setTimeLongPress(timeLongPress);
-
-    setPtrActionShort(ptrActionShort);
-    setPtrActionLong(ptrActionLong);
 }
 
-void Button::setTimeLongPress(uint32_t timeLongPress) {
-    this->timeLongPress = timeLongPress;
-}
+void Button::setTimeLongPress(uint32_t timeLongPress) { this->timeLongPress = timeLongPress; }
 
-void Button::setPtrActionShort(ptrProcedure ptrActionShort) {
-    this->ptrActionShort = ptrActionShort;
-}
+uint32_t Button::getTimeLongPress() { return timeLongPress; }
 
-void Button::setPtrActionLong(ptrProcedure ptrActionLong) {
-    this->ptrActionLong = ptrActionLong;
-}
-
-uint32_t Button::getTimeLongPress() {
-    return this->timeLongPress;
-}
-
-int8_t Button::checkPress() {   
+int8_t Button::checkPress() {  
     /* Read and save the value for next analysis. */
-    uint8_t valueRead = digitalRead(getPin());
+    uint8_t valueRead = digitalRead(pin);
 
-    /* Checking if is the first press. */
-    if (valueRead == getValuePress() && !getStatus()) {
-        setStatus(true);
+    /* Cheching if the button is pressed in this moment. */
+    if (valueRead == valuePress) {
+        /* Checking if is the first press or not. */
+        if (!isPressed) {
+            //Serial.println("Is pressed.");
+            isPressed = true;
 
-        /* Checking if is set the time of long press. If there is a value, will be set the timeout. */
-        if (getTimeLongPress() > 0) {
-            setTimeOut(millis() + getTimeLongPress());
+            /* Checking if is set the time of long press. If there is a value, will be set the timeout. */
+            if (getTimeLongPress() > DEFAULT_LONG_PRESS) {
+                timeOut = millis() + getTimeLongPress();
+            }
+
+        } else {
+            /* Checking if is the long press. */
+            if ((millis() >= timeOut) && (getTimeLongPress() > DEFAULT_LONG_PRESS) && !isLongPressed) {
+                //Serial.println("Is long press on first time.");
+                actualValue = -1;
+                isLongPressed = true;
+            } else if (isLongPressed) {
+                actualValue = 0;
+            } else {
+                actualValue = 0;
+            }
         }
+    
+    /* Else, the button is not pressed in this moment. */
+    } else {
+        /* Checking if is the short press, verifying if is set the "timeLongPress" or not. */      
+        if (isPressed && (((actualValue != -1) && (millis() < timeOut) && !isLongPressed) || (getTimeLongPress() == DEFAULT_LONG_PRESS))) {
+            //Serial.println("Is short press.");
+            isPressed = false;
+            isLongPressed = false;
+            
+            actualValue = 1;
 
-    /* Checking if is the long press. */
-    } else if ((valueRead == getValuePress()) && getStatus() && (millis() >= getTimeOut()) && (getTimeLongPress() > 0)) {
-        setActualValue(-1);
-        setStatus(false);
-
-        /* If there is a pointer to a procedure, will be executed. */
-        if (this->ptrActionLong != NULL) {
-           this->ptrActionLong();
-           
-           while (valueRead == HIGH); 
+        /* Else, is not a press. */
+        } else {
+            //Serial.println("Is not pressed.");
+            isPressed = false;
+            isLongPressed = false;
+            
+            actualValue = 0;
         }
-
-    /* Checking if is the short press, verifying if is set the "timeLongPress" or not. */      
-    } else if ((valueRead == !getValuePress()) && getStatus() && (((getActualValue() != -1) && (millis() < getTimeOut())) || (getTimeLongPress() == 0))) {
-        setActualValue(1);
-        setStatus(false);
-
-        /* If there is a pointer to a procedure, will be executed. */
-        if (this->ptrActionShort != NULL) {
-            this->ptrActionShort();
-        }
-
-    /* Checking if there is not a press. */
-    } else if (valueRead == !getValuePress()) {
-        setActualValue(0);
-        setStatus(false);
     }
-
-    return getActualValue();
-}
-
-void Button::setPin(uint8_t pin) {
-    this->pin = pin;
+    
+    return actualValue;
 }
 
 void Button::setMode(input_t mode) {
-    /* Translation of "mode" parameter to the rispective "INPUT"/"INPUT_PULLUP". */
-    if (mode == 1) {
+    /* Translation of "mode" parameter "B_NOPULLUP"/"B_PULLUP" to the rispective "INPUT"/"INPUT_PULLUP". */
+    if (mode == B_NOPULLUP) {
         this->mode = INPUT;
-    } else if (mode == 0) {
+    } else if (mode == B_PULLUP) {
         this->mode = INPUT_PULLUP;
     }
 }
 
 void Button::setValuePress() {
     /* Checking what is the value of press, "HIGH" if the mode is INPUT; "LOW" if is INPUT_PULLUP. */
-    if (getMode() == INPUT) {
+    if (mode == INPUT) {
         valuePress = HIGH;
-    } else if (getMode() == INPUT_PULLUP) {
+    } else if (mode == INPUT_PULLUP) {
         valuePress = LOW;
     }
-}
-
-void Button::setTimeOut(uint32_t timeOut) {
-    this->timeOut = timeOut;
-}
-
-void Button::setStatus(boolean status) {
-    this->status = status;
-}
-
-void Button::setActualValue(int8_t actualValue) {
-    this->actualValue = actualValue;
-}
-
-uint8_t Button::getPin() {
-    return this->pin;
-}
-
-uint8_t Button::getMode() {
-    return this->mode;
-}
-
-uint8_t Button::getValuePress() {
-    return this->valuePress;
-}
-
-uint32_t Button::getTimeOut() {
-    return this->timeOut;
-}
-
-boolean Button::getStatus() {
-    return this->status;
-}
-
-int8_t Button::getActualValue() {
-    return this->actualValue;
 }

@@ -1,18 +1,19 @@
 /**
-  Checking if the pressure is short or not, with internal resistor.
- by Davide Palladino <https://github.com/davidepalladino>
+    Checking if the pressure with internal resistor.
 
- modified on 4th May 2020
- by Davide Palladino
+    @author Davide Palladino
+    @contact me@davidepalladino.com
+    @website www.davidepalladino.com
+    @date 1st June, 2021
 */
 
 #include <Button.h>
 
 /**
- * Creating of the button assigning the pin and the constant "PULLUP". 
- * If the board is an ESP family, the respective constant "PULLUP" is "INTERNAL_RESISTOR".
+ * Creating of the button assigning the pin and the constant "B_PULLUP".
+ *  This indicates to use internal resistor.
  */
-Button button1(4, PULLUP);
+Button button1(4, B_PULLUP);
 
 void setup() {
     Serial.begin(9600);
